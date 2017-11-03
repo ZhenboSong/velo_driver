@@ -139,6 +139,8 @@ namespace velodyne
     frame_id = -1;
     memset(&recv_pack,0,sizeof(RawRound_t));
     memset(&tran_pack,0,sizeof(RawRound_t));
+    int last_angle = 0;
+    int this_angle = 0;
     while (true)
     {  
         // Unfortunately, the Linux kernel recvfrom() implementation
@@ -203,8 +205,11 @@ namespace velodyne
         {
          
           // read successful
-          if((recv_pack.packages[pack_num].blocks[0].rotation<=config_.trigger_angle)&&
-          (recv_pack.packages[pack_num].blocks[BLOCKS_PER_PACKET-1].rotation>=config_.trigger_angle))
+          // if(((recv_pack.packages[pack_num].blocks[0].rotation<=config_.trigger_angle)&&
+          // (recv_pack.packages[pack_num].blocks[BLOCKS_PER_PACKET-1].rotation>=config_.trigger_angle))||
+          // ((last_angle<=config_.trigger_angle)&&(this_angle>=config_.trigger_angle)))
+          // if(pack_num>=74)
+          if((last_angle<=config_.trigger_angle)&&(this_angle>=config_.trigger_angle))
           {
             recv_pack.pack_num = pack_num+1;
             recv_pack.frame_id = frame_id++;
