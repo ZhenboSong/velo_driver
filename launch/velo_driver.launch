@@ -1,0 +1,15 @@
+<!-- -*- mode: XML -*- -->
+<!-- start velodyne_driver/DriverNodelet in a nodelet manager -->
+
+<launch>
+  <!-- load driver nodelet into it -->
+  <node pkg="velo_driver" type="output" name="velo_output">
+    <param name="device_ip" type="string" value="" />
+    <param name="model" type="string" value="NO_DUAL" />
+    <param name="calibration" type="string" value="$(find velo_driver)/params/vlp16.yaml" />
+    <param name="min_angle" type="int" value="0" />
+    <param name="max_angle" type="int" value="36000" />
+    <param name="trigger_angle" type="int" value="18000" />
+  </node>    
+
+</launch>
